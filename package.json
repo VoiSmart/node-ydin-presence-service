@@ -1,0 +1,10 @@
+{
+    "author": "Flavio Grossi",
+    "devDependencies": {},
+    "license": "GPL-3.0",
+    "main": "index.js",
+    "name": "node-ydin-presence-service",
+    "optionalDependencies": {},
+    "readme": "README.md",
+    "version": "2.4.6-1.20161027svnr14"
+}
