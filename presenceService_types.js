@@ -5,7 +5,1854 @@
 //
 var Thrift = require('thrift').Thrift;
 var sharedService_ttypes = require('./sharedService_types')
-var presenceService_ttypes = require('./presenceService_types')
 
 
 var ttypes = module.exports = {};
+TPresenceEvent = module.exports.TPresenceEvent = function(args) {
+  this.name = null;
+  this.sip_user = null;
+  this.status = null;
+  this.contact = null;
+  this.contact_user = null;
+  this.contact_host = null;
+  this.contact_port = null;
+  this.contact_params = null;
+  this.presence_source = null;
+  this.callhunting_uuid = null;
+  this.callhunting_user = null;
+  this.call_id = null;
+  this.call_direction = null;
+  this.transfer_disposition = null;
+  if (args) {
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.sip_user !== undefined) {
+      this.sip_user = args.sip_user;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.contact !== undefined) {
+      this.contact = args.contact;
+    }
+    if (args.contact_user !== undefined) {
+      this.contact_user = args.contact_user;
+    }
+    if (args.contact_host !== undefined) {
+      this.contact_host = args.contact_host;
+    }
+    if (args.contact_port !== undefined) {
+      this.contact_port = args.contact_port;
+    }
+    if (args.contact_params !== undefined) {
+      this.contact_params = args.contact_params;
+    }
+    if (args.presence_source !== undefined) {
+      this.presence_source = args.presence_source;
+    }
+    if (args.callhunting_uuid !== undefined) {
+      this.callhunting_uuid = args.callhunting_uuid;
+    }
+    if (args.callhunting_user !== undefined) {
+      this.callhunting_user = args.callhunting_user;
+    }
+    if (args.call_id !== undefined) {
+      this.call_id = args.call_id;
+    }
+    if (args.call_direction !== undefined) {
+      this.call_direction = args.call_direction;
+    }
+    if (args.transfer_disposition !== undefined) {
+      this.transfer_disposition = args.transfer_disposition;
+    }
+  }
+};
+TPresenceEvent.prototype = {};
+TPresenceEvent.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.sip_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_host = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.contact_port = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.LIST) {
+        var _size0 = 0;
+        var _rtmp34;
+        this.contact_params = [];
+        var _etype3 = 0;
+        _rtmp34 = input.readListBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        {
+          var elem6 = null;
+          elem6 = input.readString();
+          this.contact_params.push(elem6);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.presence_source = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.callhunting_uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.callhunting_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.call_id = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.call_direction = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.STRING) {
+        this.transfer_disposition = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TPresenceEvent.prototype.write = function(output) {
+  output.writeStructBegin('TPresenceEvent');
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 1);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.sip_user !== null && this.sip_user !== undefined) {
+    output.writeFieldBegin('sip_user', Thrift.Type.STRING, 2);
+    output.writeString(this.sip_user);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 3);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.contact !== null && this.contact !== undefined) {
+    output.writeFieldBegin('contact', Thrift.Type.STRING, 4);
+    output.writeString(this.contact);
+    output.writeFieldEnd();
+  }
+  if (this.contact_user !== null && this.contact_user !== undefined) {
+    output.writeFieldBegin('contact_user', Thrift.Type.STRING, 5);
+    output.writeString(this.contact_user);
+    output.writeFieldEnd();
+  }
+  if (this.contact_host !== null && this.contact_host !== undefined) {
+    output.writeFieldBegin('contact_host', Thrift.Type.STRING, 6);
+    output.writeString(this.contact_host);
+    output.writeFieldEnd();
+  }
+  if (this.contact_port !== null && this.contact_port !== undefined) {
+    output.writeFieldBegin('contact_port', Thrift.Type.I32, 7);
+    output.writeI32(this.contact_port);
+    output.writeFieldEnd();
+  }
+  if (this.contact_params !== null && this.contact_params !== undefined) {
+    output.writeFieldBegin('contact_params', Thrift.Type.LIST, 8);
+    output.writeListBegin(Thrift.Type.STRING, this.contact_params.length);
+    for (var iter7 in this.contact_params)
+    {
+      if (this.contact_params.hasOwnProperty(iter7))
+      {
+        iter7 = this.contact_params[iter7];
+        output.writeString(iter7);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.presence_source !== null && this.presence_source !== undefined) {
+    output.writeFieldBegin('presence_source', Thrift.Type.STRING, 9);
+    output.writeString(this.presence_source);
+    output.writeFieldEnd();
+  }
+  if (this.callhunting_uuid !== null && this.callhunting_uuid !== undefined) {
+    output.writeFieldBegin('callhunting_uuid', Thrift.Type.STRING, 10);
+    output.writeString(this.callhunting_uuid);
+    output.writeFieldEnd();
+  }
+  if (this.callhunting_user !== null && this.callhunting_user !== undefined) {
+    output.writeFieldBegin('callhunting_user', Thrift.Type.STRING, 11);
+    output.writeString(this.callhunting_user);
+    output.writeFieldEnd();
+  }
+  if (this.call_id !== null && this.call_id !== undefined) {
+    output.writeFieldBegin('call_id', Thrift.Type.STRING, 12);
+    output.writeString(this.call_id);
+    output.writeFieldEnd();
+  }
+  if (this.call_direction !== null && this.call_direction !== undefined) {
+    output.writeFieldBegin('call_direction', Thrift.Type.STRING, 13);
+    output.writeString(this.call_direction);
+    output.writeFieldEnd();
+  }
+  if (this.transfer_disposition !== null && this.transfer_disposition !== undefined) {
+    output.writeFieldBegin('transfer_disposition', Thrift.Type.STRING, 14);
+    output.writeString(this.transfer_disposition);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TRegisterEvent = module.exports.TRegisterEvent = function(args) {
+  this.name = null;
+  this.sip_user = null;
+  this.expiry = null;
+  this.contact = null;
+  this.contact_user = null;
+  this.contact_host = null;
+  this.contact_port = null;
+  this.contact_params = null;
+  this.profile = null;
+  if (args) {
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.sip_user !== undefined) {
+      this.sip_user = args.sip_user;
+    }
+    if (args.expiry !== undefined) {
+      this.expiry = args.expiry;
+    }
+    if (args.contact !== undefined) {
+      this.contact = args.contact;
+    }
+    if (args.contact_user !== undefined) {
+      this.contact_user = args.contact_user;
+    }
+    if (args.contact_host !== undefined) {
+      this.contact_host = args.contact_host;
+    }
+    if (args.contact_port !== undefined) {
+      this.contact_port = args.contact_port;
+    }
+    if (args.contact_params !== undefined) {
+      this.contact_params = args.contact_params;
+    }
+    if (args.profile !== undefined) {
+      this.profile = args.profile;
+    }
+  }
+};
+TRegisterEvent.prototype = {};
+TRegisterEvent.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.sip_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.expiry = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_host = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.contact_port = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.LIST) {
+        var _size8 = 0;
+        var _rtmp312;
+        this.contact_params = [];
+        var _etype11 = 0;
+        _rtmp312 = input.readListBegin();
+        _etype11 = _rtmp312.etype;
+        _size8 = _rtmp312.size;
+        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        {
+          var elem14 = null;
+          elem14 = input.readString();
+          this.contact_params.push(elem14);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.profile = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TRegisterEvent.prototype.write = function(output) {
+  output.writeStructBegin('TRegisterEvent');
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 1);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.sip_user !== null && this.sip_user !== undefined) {
+    output.writeFieldBegin('sip_user', Thrift.Type.STRING, 2);
+    output.writeString(this.sip_user);
+    output.writeFieldEnd();
+  }
+  if (this.expiry !== null && this.expiry !== undefined) {
+    output.writeFieldBegin('expiry', Thrift.Type.I32, 3);
+    output.writeI32(this.expiry);
+    output.writeFieldEnd();
+  }
+  if (this.contact !== null && this.contact !== undefined) {
+    output.writeFieldBegin('contact', Thrift.Type.STRING, 4);
+    output.writeString(this.contact);
+    output.writeFieldEnd();
+  }
+  if (this.contact_user !== null && this.contact_user !== undefined) {
+    output.writeFieldBegin('contact_user', Thrift.Type.STRING, 5);
+    output.writeString(this.contact_user);
+    output.writeFieldEnd();
+  }
+  if (this.contact_host !== null && this.contact_host !== undefined) {
+    output.writeFieldBegin('contact_host', Thrift.Type.STRING, 6);
+    output.writeString(this.contact_host);
+    output.writeFieldEnd();
+  }
+  if (this.contact_port !== null && this.contact_port !== undefined) {
+    output.writeFieldBegin('contact_port', Thrift.Type.I32, 7);
+    output.writeI32(this.contact_port);
+    output.writeFieldEnd();
+  }
+  if (this.contact_params !== null && this.contact_params !== undefined) {
+    output.writeFieldBegin('contact_params', Thrift.Type.LIST, 8);
+    output.writeListBegin(Thrift.Type.STRING, this.contact_params.length);
+    for (var iter15 in this.contact_params)
+    {
+      if (this.contact_params.hasOwnProperty(iter15))
+      {
+        iter15 = this.contact_params[iter15];
+        output.writeString(iter15);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.profile !== null && this.profile !== undefined) {
+    output.writeFieldBegin('profile', Thrift.Type.STRING, 9);
+    output.writeString(this.profile);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TPingStateEvent = module.exports.TPingStateEvent = function(args) {
+  this.name = null;
+  this.sip_user = null;
+  this.ping_status = null;
+  this.ping_response = null;
+  this.reason = null;
+  this.contact = null;
+  this.contact_user = null;
+  this.contact_host = null;
+  this.contact_port = null;
+  this.contact_params = null;
+  if (args) {
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.sip_user !== undefined) {
+      this.sip_user = args.sip_user;
+    }
+    if (args.ping_status !== undefined) {
+      this.ping_status = args.ping_status;
+    }
+    if (args.ping_response !== undefined) {
+      this.ping_response = args.ping_response;
+    }
+    if (args.reason !== undefined) {
+      this.reason = args.reason;
+    }
+    if (args.contact !== undefined) {
+      this.contact = args.contact;
+    }
+    if (args.contact_user !== undefined) {
+      this.contact_user = args.contact_user;
+    }
+    if (args.contact_host !== undefined) {
+      this.contact_host = args.contact_host;
+    }
+    if (args.contact_port !== undefined) {
+      this.contact_port = args.contact_port;
+    }
+    if (args.contact_params !== undefined) {
+      this.contact_params = args.contact_params;
+    }
+  }
+};
+TPingStateEvent.prototype = {};
+TPingStateEvent.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.sip_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.ping_status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I16) {
+        this.ping_response = input.readI16();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.reason = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_host = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.I32) {
+        this.contact_port = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.LIST) {
+        var _size16 = 0;
+        var _rtmp320;
+        this.contact_params = [];
+        var _etype19 = 0;
+        _rtmp320 = input.readListBegin();
+        _etype19 = _rtmp320.etype;
+        _size16 = _rtmp320.size;
+        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        {
+          var elem22 = null;
+          elem22 = input.readString();
+          this.contact_params.push(elem22);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TPingStateEvent.prototype.write = function(output) {
+  output.writeStructBegin('TPingStateEvent');
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 1);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.sip_user !== null && this.sip_user !== undefined) {
+    output.writeFieldBegin('sip_user', Thrift.Type.STRING, 2);
+    output.writeString(this.sip_user);
+    output.writeFieldEnd();
+  }
+  if (this.ping_status !== null && this.ping_status !== undefined) {
+    output.writeFieldBegin('ping_status', Thrift.Type.STRING, 3);
+    output.writeString(this.ping_status);
+    output.writeFieldEnd();
+  }
+  if (this.ping_response !== null && this.ping_response !== undefined) {
+    output.writeFieldBegin('ping_response', Thrift.Type.I16, 4);
+    output.writeI16(this.ping_response);
+    output.writeFieldEnd();
+  }
+  if (this.reason !== null && this.reason !== undefined) {
+    output.writeFieldBegin('reason', Thrift.Type.STRING, 5);
+    output.writeString(this.reason);
+    output.writeFieldEnd();
+  }
+  if (this.contact !== null && this.contact !== undefined) {
+    output.writeFieldBegin('contact', Thrift.Type.STRING, 6);
+    output.writeString(this.contact);
+    output.writeFieldEnd();
+  }
+  if (this.contact_user !== null && this.contact_user !== undefined) {
+    output.writeFieldBegin('contact_user', Thrift.Type.STRING, 7);
+    output.writeString(this.contact_user);
+    output.writeFieldEnd();
+  }
+  if (this.contact_host !== null && this.contact_host !== undefined) {
+    output.writeFieldBegin('contact_host', Thrift.Type.STRING, 8);
+    output.writeString(this.contact_host);
+    output.writeFieldEnd();
+  }
+  if (this.contact_port !== null && this.contact_port !== undefined) {
+    output.writeFieldBegin('contact_port', Thrift.Type.I32, 9);
+    output.writeI32(this.contact_port);
+    output.writeFieldEnd();
+  }
+  if (this.contact_params !== null && this.contact_params !== undefined) {
+    output.writeFieldBegin('contact_params', Thrift.Type.LIST, 10);
+    output.writeListBegin(Thrift.Type.STRING, this.contact_params.length);
+    for (var iter23 in this.contact_params)
+    {
+      if (this.contact_params.hasOwnProperty(iter23))
+      {
+        iter23 = this.contact_params[iter23];
+        output.writeString(iter23);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TChannelEvent = module.exports.TChannelEvent = function(args) {
+  this.name = null;
+  this.uuid = null;
+  this.call_state = null;
+  this.called_uuid = null;
+  this.direction = null;
+  this.state = null;
+  this.cid_name = null;
+  this.cid_num = null;
+  this.domain_id = null;
+  this.dialing_domain = null;
+  this.dialing_user = null;
+  this.pickupgroup_id = null;
+  this.dialed_domain = null;
+  this.dialed_user = null;
+  this.application = null;
+  this.application_data = null;
+  this.socket_service = null;
+  this.destination_number = null;
+  this.called_accountcode = null;
+  this.recording_accountcode = null;
+  this.attended_xfer_origination_uuid = null;
+  this.attended_xfer_parked_uuid = null;
+  this.park_lot = null;
+  this.parking_accountcode = null;
+  this.ydin_uuid = null;
+  if (args) {
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.uuid !== undefined) {
+      this.uuid = args.uuid;
+    }
+    if (args.call_state !== undefined) {
+      this.call_state = args.call_state;
+    }
+    if (args.called_uuid !== undefined) {
+      this.called_uuid = args.called_uuid;
+    }
+    if (args.direction !== undefined) {
+      this.direction = args.direction;
+    }
+    if (args.state !== undefined) {
+      this.state = args.state;
+    }
+    if (args.cid_name !== undefined) {
+      this.cid_name = args.cid_name;
+    }
+    if (args.cid_num !== undefined) {
+      this.cid_num = args.cid_num;
+    }
+    if (args.domain_id !== undefined) {
+      this.domain_id = args.domain_id;
+    }
+    if (args.dialing_domain !== undefined) {
+      this.dialing_domain = args.dialing_domain;
+    }
+    if (args.dialing_user !== undefined) {
+      this.dialing_user = args.dialing_user;
+    }
+    if (args.pickupgroup_id !== undefined) {
+      this.pickupgroup_id = args.pickupgroup_id;
+    }
+    if (args.dialed_domain !== undefined) {
+      this.dialed_domain = args.dialed_domain;
+    }
+    if (args.dialed_user !== undefined) {
+      this.dialed_user = args.dialed_user;
+    }
+    if (args.application !== undefined) {
+      this.application = args.application;
+    }
+    if (args.application_data !== undefined) {
+      this.application_data = args.application_data;
+    }
+    if (args.socket_service !== undefined) {
+      this.socket_service = args.socket_service;
+    }
+    if (args.destination_number !== undefined) {
+      this.destination_number = args.destination_number;
+    }
+    if (args.called_accountcode !== undefined) {
+      this.called_accountcode = args.called_accountcode;
+    }
+    if (args.recording_accountcode !== undefined) {
+      this.recording_accountcode = args.recording_accountcode;
+    }
+    if (args.attended_xfer_origination_uuid !== undefined) {
+      this.attended_xfer_origination_uuid = args.attended_xfer_origination_uuid;
+    }
+    if (args.attended_xfer_parked_uuid !== undefined) {
+      this.attended_xfer_parked_uuid = args.attended_xfer_parked_uuid;
+    }
+    if (args.park_lot !== undefined) {
+      this.park_lot = args.park_lot;
+    }
+    if (args.parking_accountcode !== undefined) {
+      this.parking_accountcode = args.parking_accountcode;
+    }
+    if (args.ydin_uuid !== undefined) {
+      this.ydin_uuid = args.ydin_uuid;
+    }
+  }
+};
+TChannelEvent.prototype = {};
+TChannelEvent.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.call_state = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.called_uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.direction = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.state = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.cid_name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.cid_num = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.I32) {
+        this.domain_id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.dialing_domain = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRING) {
+        this.dialing_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.I32) {
+        this.pickupgroup_id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.dialed_domain = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.STRING) {
+        this.dialed_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 15:
+      if (ftype == Thrift.Type.STRING) {
+        this.application = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 16:
+      if (ftype == Thrift.Type.STRING) {
+        this.application_data = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 17:
+      if (ftype == Thrift.Type.STRING) {
+        this.socket_service = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 18:
+      if (ftype == Thrift.Type.STRING) {
+        this.destination_number = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 19:
+      if (ftype == Thrift.Type.STRING) {
+        this.called_accountcode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 20:
+      if (ftype == Thrift.Type.STRING) {
+        this.recording_accountcode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 21:
+      if (ftype == Thrift.Type.STRING) {
+        this.attended_xfer_origination_uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 22:
+      if (ftype == Thrift.Type.STRING) {
+        this.attended_xfer_parked_uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 23:
+      if (ftype == Thrift.Type.STRING) {
+        this.park_lot = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 24:
+      if (ftype == Thrift.Type.STRING) {
+        this.parking_accountcode = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 25:
+      if (ftype == Thrift.Type.STRING) {
+        this.ydin_uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TChannelEvent.prototype.write = function(output) {
+  output.writeStructBegin('TChannelEvent');
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 1);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.uuid !== null && this.uuid !== undefined) {
+    output.writeFieldBegin('uuid', Thrift.Type.STRING, 2);
+    output.writeString(this.uuid);
+    output.writeFieldEnd();
+  }
+  if (this.call_state !== null && this.call_state !== undefined) {
+    output.writeFieldBegin('call_state', Thrift.Type.STRING, 3);
+    output.writeString(this.call_state);
+    output.writeFieldEnd();
+  }
+  if (this.called_uuid !== null && this.called_uuid !== undefined) {
+    output.writeFieldBegin('called_uuid', Thrift.Type.STRING, 4);
+    output.writeString(this.called_uuid);
+    output.writeFieldEnd();
+  }
+  if (this.direction !== null && this.direction !== undefined) {
+    output.writeFieldBegin('direction', Thrift.Type.STRING, 5);
+    output.writeString(this.direction);
+    output.writeFieldEnd();
+  }
+  if (this.state !== null && this.state !== undefined) {
+    output.writeFieldBegin('state', Thrift.Type.STRING, 6);
+    output.writeString(this.state);
+    output.writeFieldEnd();
+  }
+  if (this.cid_name !== null && this.cid_name !== undefined) {
+    output.writeFieldBegin('cid_name', Thrift.Type.STRING, 7);
+    output.writeString(this.cid_name);
+    output.writeFieldEnd();
+  }
+  if (this.cid_num !== null && this.cid_num !== undefined) {
+    output.writeFieldBegin('cid_num', Thrift.Type.STRING, 8);
+    output.writeString(this.cid_num);
+    output.writeFieldEnd();
+  }
+  if (this.domain_id !== null && this.domain_id !== undefined) {
+    output.writeFieldBegin('domain_id', Thrift.Type.I32, 9);
+    output.writeI32(this.domain_id);
+    output.writeFieldEnd();
+  }
+  if (this.dialing_domain !== null && this.dialing_domain !== undefined) {
+    output.writeFieldBegin('dialing_domain', Thrift.Type.STRING, 10);
+    output.writeString(this.dialing_domain);
+    output.writeFieldEnd();
+  }
+  if (this.dialing_user !== null && this.dialing_user !== undefined) {
+    output.writeFieldBegin('dialing_user', Thrift.Type.STRING, 11);
+    output.writeString(this.dialing_user);
+    output.writeFieldEnd();
+  }
+  if (this.pickupgroup_id !== null && this.pickupgroup_id !== undefined) {
+    output.writeFieldBegin('pickupgroup_id', Thrift.Type.I32, 12);
+    output.writeI32(this.pickupgroup_id);
+    output.writeFieldEnd();
+  }
+  if (this.dialed_domain !== null && this.dialed_domain !== undefined) {
+    output.writeFieldBegin('dialed_domain', Thrift.Type.STRING, 13);
+    output.writeString(this.dialed_domain);
+    output.writeFieldEnd();
+  }
+  if (this.dialed_user !== null && this.dialed_user !== undefined) {
+    output.writeFieldBegin('dialed_user', Thrift.Type.STRING, 14);
+    output.writeString(this.dialed_user);
+    output.writeFieldEnd();
+  }
+  if (this.application !== null && this.application !== undefined) {
+    output.writeFieldBegin('application', Thrift.Type.STRING, 15);
+    output.writeString(this.application);
+    output.writeFieldEnd();
+  }
+  if (this.application_data !== null && this.application_data !== undefined) {
+    output.writeFieldBegin('application_data', Thrift.Type.STRING, 16);
+    output.writeString(this.application_data);
+    output.writeFieldEnd();
+  }
+  if (this.socket_service !== null && this.socket_service !== undefined) {
+    output.writeFieldBegin('socket_service', Thrift.Type.STRING, 17);
+    output.writeString(this.socket_service);
+    output.writeFieldEnd();
+  }
+  if (this.destination_number !== null && this.destination_number !== undefined) {
+    output.writeFieldBegin('destination_number', Thrift.Type.STRING, 18);
+    output.writeString(this.destination_number);
+    output.writeFieldEnd();
+  }
+  if (this.called_accountcode !== null && this.called_accountcode !== undefined) {
+    output.writeFieldBegin('called_accountcode', Thrift.Type.STRING, 19);
+    output.writeString(this.called_accountcode);
+    output.writeFieldEnd();
+  }
+  if (this.recording_accountcode !== null && this.recording_accountcode !== undefined) {
+    output.writeFieldBegin('recording_accountcode', Thrift.Type.STRING, 20);
+    output.writeString(this.recording_accountcode);
+    output.writeFieldEnd();
+  }
+  if (this.attended_xfer_origination_uuid !== null && this.attended_xfer_origination_uuid !== undefined) {
+    output.writeFieldBegin('attended_xfer_origination_uuid', Thrift.Type.STRING, 21);
+    output.writeString(this.attended_xfer_origination_uuid);
+    output.writeFieldEnd();
+  }
+  if (this.attended_xfer_parked_uuid !== null && this.attended_xfer_parked_uuid !== undefined) {
+    output.writeFieldBegin('attended_xfer_parked_uuid', Thrift.Type.STRING, 22);
+    output.writeString(this.attended_xfer_parked_uuid);
+    output.writeFieldEnd();
+  }
+  if (this.park_lot !== null && this.park_lot !== undefined) {
+    output.writeFieldBegin('park_lot', Thrift.Type.STRING, 23);
+    output.writeString(this.park_lot);
+    output.writeFieldEnd();
+  }
+  if (this.parking_accountcode !== null && this.parking_accountcode !== undefined) {
+    output.writeFieldBegin('parking_accountcode', Thrift.Type.STRING, 24);
+    output.writeString(this.parking_accountcode);
+    output.writeFieldEnd();
+  }
+  if (this.ydin_uuid !== null && this.ydin_uuid !== undefined) {
+    output.writeFieldBegin('ydin_uuid', Thrift.Type.STRING, 25);
+    output.writeString(this.ydin_uuid);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TXmppEvent = module.exports.TXmppEvent = function(args) {
+  this.name = 'PRESENCE';
+  this.user = null;
+  this.domain = null;
+  this.resource = null;
+  this.priority = null;
+  this.status = null;
+  this.status_message = null;
+  this.photo = null;
+  this.presence_source = 'xmpp';
+  if (args) {
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.user !== undefined) {
+      this.user = args.user;
+    }
+    if (args.domain !== undefined) {
+      this.domain = args.domain;
+    }
+    if (args.resource !== undefined) {
+      this.resource = args.resource;
+    }
+    if (args.priority !== undefined) {
+      this.priority = args.priority;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.status_message !== undefined) {
+      this.status_message = args.status_message;
+    }
+    if (args.photo !== undefined) {
+      this.photo = args.photo;
+    }
+    if (args.presence_source !== undefined) {
+      this.presence_source = args.presence_source;
+    }
+  }
+};
+TXmppEvent.prototype = {};
+TXmppEvent.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.domain = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.resource = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I32) {
+        this.priority = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.status_message = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.photo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.presence_source = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TXmppEvent.prototype.write = function(output) {
+  output.writeStructBegin('TXmppEvent');
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 1);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 2);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  if (this.domain !== null && this.domain !== undefined) {
+    output.writeFieldBegin('domain', Thrift.Type.STRING, 3);
+    output.writeString(this.domain);
+    output.writeFieldEnd();
+  }
+  if (this.resource !== null && this.resource !== undefined) {
+    output.writeFieldBegin('resource', Thrift.Type.STRING, 4);
+    output.writeString(this.resource);
+    output.writeFieldEnd();
+  }
+  if (this.priority !== null && this.priority !== undefined) {
+    output.writeFieldBegin('priority', Thrift.Type.I32, 5);
+    output.writeI32(this.priority);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 6);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.status_message !== null && this.status_message !== undefined) {
+    output.writeFieldBegin('status_message', Thrift.Type.STRING, 7);
+    output.writeString(this.status_message);
+    output.writeFieldEnd();
+  }
+  if (this.photo !== null && this.photo !== undefined) {
+    output.writeFieldBegin('photo', Thrift.Type.STRING, 8);
+    output.writeString(this.photo);
+    output.writeFieldEnd();
+  }
+  if (this.presence_source !== null && this.presence_source !== undefined) {
+    output.writeFieldBegin('presence_source', Thrift.Type.STRING, 9);
+    output.writeString(this.presence_source);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TPresence = module.exports.TPresence = function(args) {
+  this.user_id = null;
+  this.username = null;
+  this.status = null;
+  if (args) {
+    if (args.user_id !== undefined) {
+      this.user_id = args.user_id;
+    }
+    if (args.username !== undefined) {
+      this.username = args.username;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+  }
+};
+TPresence.prototype = {};
+TPresence.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.user_id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.username = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TPresence.prototype.write = function(output) {
+  output.writeStructBegin('TPresence');
+  if (this.user_id !== null && this.user_id !== undefined) {
+    output.writeFieldBegin('user_id', Thrift.Type.I32, 1);
+    output.writeI32(this.user_id);
+    output.writeFieldEnd();
+  }
+  if (this.username !== null && this.username !== undefined) {
+    output.writeFieldBegin('username', Thrift.Type.STRING, 2);
+    output.writeString(this.username);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 3);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TRegistration = module.exports.TRegistration = function(args) {
+  this.user = null;
+  this.status = null;
+  this.ping_status = null;
+  this.note = null;
+  this.contact_user = null;
+  this.contact_host = null;
+  this.contact_port = null;
+  this.contact_params = null;
+  this.contact_str = null;
+  if (args) {
+    if (args.user !== undefined) {
+      this.user = args.user;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.ping_status !== undefined) {
+      this.ping_status = args.ping_status;
+    }
+    if (args.note !== undefined) {
+      this.note = args.note;
+    }
+    if (args.contact_user !== undefined) {
+      this.contact_user = args.contact_user;
+    }
+    if (args.contact_host !== undefined) {
+      this.contact_host = args.contact_host;
+    }
+    if (args.contact_port !== undefined) {
+      this.contact_port = args.contact_port;
+    }
+    if (args.contact_params !== undefined) {
+      this.contact_params = args.contact_params;
+    }
+    if (args.contact_str !== undefined) {
+      this.contact_str = args.contact_str;
+    }
+  }
+};
+TRegistration.prototype = {};
+TRegistration.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.ping_status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.note = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_host = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.contact_port = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.LIST) {
+        var _size24 = 0;
+        var _rtmp328;
+        this.contact_params = [];
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
+        {
+          var elem30 = null;
+          elem30 = input.readString();
+          this.contact_params.push(elem30);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_str = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TRegistration.prototype.write = function(output) {
+  output.writeStructBegin('TRegistration');
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 1);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 2);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.ping_status !== null && this.ping_status !== undefined) {
+    output.writeFieldBegin('ping_status', Thrift.Type.STRING, 3);
+    output.writeString(this.ping_status);
+    output.writeFieldEnd();
+  }
+  if (this.note !== null && this.note !== undefined) {
+    output.writeFieldBegin('note', Thrift.Type.STRING, 4);
+    output.writeString(this.note);
+    output.writeFieldEnd();
+  }
+  if (this.contact_user !== null && this.contact_user !== undefined) {
+    output.writeFieldBegin('contact_user', Thrift.Type.STRING, 5);
+    output.writeString(this.contact_user);
+    output.writeFieldEnd();
+  }
+  if (this.contact_host !== null && this.contact_host !== undefined) {
+    output.writeFieldBegin('contact_host', Thrift.Type.STRING, 6);
+    output.writeString(this.contact_host);
+    output.writeFieldEnd();
+  }
+  if (this.contact_port !== null && this.contact_port !== undefined) {
+    output.writeFieldBegin('contact_port', Thrift.Type.I32, 7);
+    output.writeI32(this.contact_port);
+    output.writeFieldEnd();
+  }
+  if (this.contact_params !== null && this.contact_params !== undefined) {
+    output.writeFieldBegin('contact_params', Thrift.Type.LIST, 8);
+    output.writeListBegin(Thrift.Type.STRING, this.contact_params.length);
+    for (var iter31 in this.contact_params)
+    {
+      if (this.contact_params.hasOwnProperty(iter31))
+      {
+        iter31 = this.contact_params[iter31];
+        output.writeString(iter31);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.contact_str !== null && this.contact_str !== undefined) {
+    output.writeFieldBegin('contact_str', Thrift.Type.STRING, 9);
+    output.writeString(this.contact_str);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+TPresenceInfo = module.exports.TPresenceInfo = function(args) {
+  this.user_id = null;
+  this.domain_id = null;
+  this.user_agent = null;
+  this.user_agent_type = null;
+  this.node_name = null;
+  this.status = null;
+  this.note = null;
+  this.contact = null;
+  this.contact_user = null;
+  this.contact_host = null;
+  this.contact_port = null;
+  this.contact_params = null;
+  this.call_id = null;
+  this.call_direction = null;
+  if (args) {
+    if (args.user_id !== undefined) {
+      this.user_id = args.user_id;
+    }
+    if (args.domain_id !== undefined) {
+      this.domain_id = args.domain_id;
+    }
+    if (args.user_agent !== undefined) {
+      this.user_agent = args.user_agent;
+    }
+    if (args.user_agent_type !== undefined) {
+      this.user_agent_type = args.user_agent_type;
+    }
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.note !== undefined) {
+      this.note = args.note;
+    }
+    if (args.contact !== undefined) {
+      this.contact = args.contact;
+    }
+    if (args.contact_user !== undefined) {
+      this.contact_user = args.contact_user;
+    }
+    if (args.contact_host !== undefined) {
+      this.contact_host = args.contact_host;
+    }
+    if (args.contact_port !== undefined) {
+      this.contact_port = args.contact_port;
+    }
+    if (args.contact_params !== undefined) {
+      this.contact_params = args.contact_params;
+    }
+    if (args.call_id !== undefined) {
+      this.call_id = args.call_id;
+    }
+    if (args.call_direction !== undefined) {
+      this.call_direction = args.call_direction;
+    }
+  }
+};
+TPresenceInfo.prototype = {};
+TPresenceInfo.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I32) {
+        this.user_id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.domain_id = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.user_agent = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.user_agent_type = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.node_name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.note = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 9:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_host = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.I32) {
+        this.contact_port = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRING) {
+        this.contact_params = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 13:
+      if (ftype == Thrift.Type.STRING) {
+        this.call_id = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 14:
+      if (ftype == Thrift.Type.STRING) {
+        this.call_direction = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TPresenceInfo.prototype.write = function(output) {
+  output.writeStructBegin('TPresenceInfo');
+  if (this.user_id !== null && this.user_id !== undefined) {
+    output.writeFieldBegin('user_id', Thrift.Type.I32, 1);
+    output.writeI32(this.user_id);
+    output.writeFieldEnd();
+  }
+  if (this.domain_id !== null && this.domain_id !== undefined) {
+    output.writeFieldBegin('domain_id', Thrift.Type.I32, 2);
+    output.writeI32(this.domain_id);
+    output.writeFieldEnd();
+  }
+  if (this.user_agent !== null && this.user_agent !== undefined) {
+    output.writeFieldBegin('user_agent', Thrift.Type.STRING, 3);
+    output.writeString(this.user_agent);
+    output.writeFieldEnd();
+  }
+  if (this.user_agent_type !== null && this.user_agent_type !== undefined) {
+    output.writeFieldBegin('user_agent_type', Thrift.Type.STRING, 4);
+    output.writeString(this.user_agent_type);
+    output.writeFieldEnd();
+  }
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 5);
+    output.writeString(this.node_name);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 6);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.note !== null && this.note !== undefined) {
+    output.writeFieldBegin('note', Thrift.Type.STRING, 7);
+    output.writeString(this.note);
+    output.writeFieldEnd();
+  }
+  if (this.contact !== null && this.contact !== undefined) {
+    output.writeFieldBegin('contact', Thrift.Type.STRING, 8);
+    output.writeString(this.contact);
+    output.writeFieldEnd();
+  }
+  if (this.contact_user !== null && this.contact_user !== undefined) {
+    output.writeFieldBegin('contact_user', Thrift.Type.STRING, 9);
+    output.writeString(this.contact_user);
+    output.writeFieldEnd();
+  }
+  if (this.contact_host !== null && this.contact_host !== undefined) {
+    output.writeFieldBegin('contact_host', Thrift.Type.STRING, 10);
+    output.writeString(this.contact_host);
+    output.writeFieldEnd();
+  }
+  if (this.contact_port !== null && this.contact_port !== undefined) {
+    output.writeFieldBegin('contact_port', Thrift.Type.I32, 11);
+    output.writeI32(this.contact_port);
+    output.writeFieldEnd();
+  }
+  if (this.contact_params !== null && this.contact_params !== undefined) {
+    output.writeFieldBegin('contact_params', Thrift.Type.STRING, 12);
+    output.writeString(this.contact_params);
+    output.writeFieldEnd();
+  }
+  if (this.call_id !== null && this.call_id !== undefined) {
+    output.writeFieldBegin('call_id', Thrift.Type.STRING, 13);
+    output.writeString(this.call_id);
+    output.writeFieldEnd();
+  }
+  if (this.call_direction !== null && this.call_direction !== undefined) {
+    output.writeFieldBegin('call_direction', Thrift.Type.STRING, 14);
+    output.writeString(this.call_direction);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

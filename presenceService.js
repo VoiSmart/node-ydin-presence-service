@@ -5,7 +5,6 @@
 //
 var Thrift = require('thrift').Thrift;
 var sharedService_ttypes = require('./sharedService_types')
-var presenceService_ttypes = require('./presenceService_types')
 
 
 var baseService = require('./baseService')
@@ -15,13 +14,9 @@ var ttypes = require('./presenceService_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
 presenceService_request_initial_status_args = function(args) {
-  this.token = null;
   this.domain = null;
   this.request_uuid = null;
   if (args) {
-    if (args.token !== undefined) {
-      this.token = args.token;
-    }
     if (args.domain !== undefined) {
       this.domain = args.domain;
     }
@@ -45,20 +40,13 @@ presenceService_request_initial_status_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.token = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
       if (ftype == Thrift.Type.I32) {
         this.domain = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 3:
+      case 2:
       if (ftype == Thrift.Type.STRING) {
         this.request_uuid = input.readString();
       } else {
@@ -76,18 +64,13 @@ presenceService_request_initial_status_args.prototype.read = function(input) {
 
 presenceService_request_initial_status_args.prototype.write = function(output) {
   output.writeStructBegin('presenceService_request_initial_status_args');
-  if (this.token !== null && this.token !== undefined) {
-    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
-    output.writeString(this.token);
-    output.writeFieldEnd();
-  }
   if (this.domain !== null && this.domain !== undefined) {
-    output.writeFieldBegin('domain', Thrift.Type.I32, 2);
+    output.writeFieldBegin('domain', Thrift.Type.I32, 1);
     output.writeI32(this.domain);
     output.writeFieldEnd();
   }
   if (this.request_uuid !== null && this.request_uuid !== undefined) {
-    output.writeFieldBegin('request_uuid', Thrift.Type.STRING, 3);
+    output.writeFieldBegin('request_uuid', Thrift.Type.STRING, 2);
     output.writeString(this.request_uuid);
     output.writeFieldEnd();
   }
@@ -154,13 +137,539 @@ presenceService_request_initial_status_result.prototype.write = function(output)
   return;
 };
 
+presenceService_probe_status_args = function(args) {
+  this.user = null;
+  this.domain = null;
+  this.request_uuid = null;
+  if (args) {
+    if (args.user !== undefined) {
+      this.user = args.user;
+    }
+    if (args.domain !== undefined) {
+      this.domain = args.domain;
+    }
+    if (args.request_uuid !== undefined) {
+      this.request_uuid = args.request_uuid;
+    }
+  }
+};
+presenceService_probe_status_args.prototype = {};
+presenceService_probe_status_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.domain = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.request_uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_probe_status_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_probe_status_args');
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 1);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  if (this.domain !== null && this.domain !== undefined) {
+    output.writeFieldBegin('domain', Thrift.Type.STRING, 2);
+    output.writeString(this.domain);
+    output.writeFieldEnd();
+  }
+  if (this.request_uuid !== null && this.request_uuid !== undefined) {
+    output.writeFieldBegin('request_uuid', Thrift.Type.STRING, 3);
+    output.writeString(this.request_uuid);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_probe_status_result = function(args) {
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_probe_status_result.prototype = {};
+presenceService_probe_status_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_probe_status_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_probe_status_result');
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_probe_user_status_args = function(args) {
+  this.user = null;
+  this.domain = null;
+  this.request_uuid = null;
+  if (args) {
+    if (args.user !== undefined) {
+      this.user = args.user;
+    }
+    if (args.domain !== undefined) {
+      this.domain = args.domain;
+    }
+    if (args.request_uuid !== undefined) {
+      this.request_uuid = args.request_uuid;
+    }
+  }
+};
+presenceService_probe_user_status_args.prototype = {};
+presenceService_probe_user_status_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.domain = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.request_uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_probe_user_status_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_probe_user_status_args');
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 1);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  if (this.domain !== null && this.domain !== undefined) {
+    output.writeFieldBegin('domain', Thrift.Type.STRING, 2);
+    output.writeString(this.domain);
+    output.writeFieldEnd();
+  }
+  if (this.request_uuid !== null && this.request_uuid !== undefined) {
+    output.writeFieldBegin('request_uuid', Thrift.Type.STRING, 3);
+    output.writeString(this.request_uuid);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_probe_user_status_result = function(args) {
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_probe_user_status_result.prototype = {};
+presenceService_probe_user_status_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_probe_user_status_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_probe_user_status_result');
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_publish_presence_args = function(args) {
+  this.ev = null;
+  this.node_name = null;
+  if (args) {
+    if (args.ev !== undefined) {
+      this.ev = args.ev;
+    }
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
+    }
+  }
+};
+presenceService_publish_presence_args.prototype = {};
+presenceService_publish_presence_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.ev = new ttypes.TPresenceEvent();
+        this.ev.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.node_name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_publish_presence_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_presence_args');
+  if (this.ev !== null && this.ev !== undefined) {
+    output.writeFieldBegin('ev', Thrift.Type.STRUCT, 1);
+    this.ev.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 2);
+    output.writeString(this.node_name);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_publish_presence_result = function(args) {
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_publish_presence_result.prototype = {};
+presenceService_publish_presence_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_publish_presence_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_presence_result');
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_publish_channel_args = function(args) {
+  this.ev = null;
+  this.node_name = null;
+  if (args) {
+    if (args.ev !== undefined) {
+      this.ev = args.ev;
+    }
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
+    }
+  }
+};
+presenceService_publish_channel_args.prototype = {};
+presenceService_publish_channel_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.ev = new ttypes.TChannelEvent();
+        this.ev.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.node_name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_publish_channel_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_channel_args');
+  if (this.ev !== null && this.ev !== undefined) {
+    output.writeFieldBegin('ev', Thrift.Type.STRUCT, 1);
+    this.ev.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 2);
+    output.writeString(this.node_name);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_publish_channel_result = function(args) {
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_publish_channel_result.prototype = {};
+presenceService_publish_channel_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_publish_channel_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_channel_result');
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 presenceService_publish_xmpp_presence_args = function(args) {
-  this.token = null;
   this.ev = null;
   if (args) {
-    if (args.token !== undefined) {
-      this.token = args.token;
-    }
     if (args.ev !== undefined) {
       this.ev = args.ev;
     }
@@ -181,20 +690,16 @@ presenceService_publish_xmpp_presence_args.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.token = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
       if (ftype == Thrift.Type.STRUCT) {
-        this.ev = new presenceService_ttypes.TXmppEvent();
+        this.ev = new ttypes.TXmppEvent();
         this.ev.read(input);
       } else {
         input.skip(ftype);
       }
       break;
+      case 0:
+        input.skip(ftype);
+        break;
       default:
         input.skip(ftype);
     }
@@ -206,13 +711,8 @@ presenceService_publish_xmpp_presence_args.prototype.read = function(input) {
 
 presenceService_publish_xmpp_presence_args.prototype.write = function(output) {
   output.writeStructBegin('presenceService_publish_xmpp_presence_args');
-  if (this.token !== null && this.token !== undefined) {
-    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
-    output.writeString(this.token);
-    output.writeFieldEnd();
-  }
   if (this.ev !== null && this.ev !== undefined) {
-    output.writeFieldBegin('ev', Thrift.Type.STRUCT, 2);
+    output.writeFieldBegin('ev', Thrift.Type.STRUCT, 1);
     this.ev.write(output);
     output.writeFieldEnd();
   }
@@ -279,20 +779,20 @@ presenceService_publish_xmpp_presence_result.prototype.write = function(output) 
   return;
 };
 
-presenceService_get_presence_info_for_user_args = function(args) {
-  this.token = null;
-  this.user = null;
+presenceService_publish_pingstate_args = function(args) {
+  this.ev = null;
+  this.node_name = null;
   if (args) {
-    if (args.token !== undefined) {
-      this.token = args.token;
+    if (args.ev !== undefined) {
+      this.ev = args.ev;
     }
-    if (args.user !== undefined) {
-      this.user = args.user;
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
     }
   }
 };
-presenceService_get_presence_info_for_user_args.prototype = {};
-presenceService_get_presence_info_for_user_args.prototype.read = function(input) {
+presenceService_publish_pingstate_args.prototype = {};
+presenceService_publish_pingstate_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -306,15 +806,16 @@ presenceService_get_presence_info_for_user_args.prototype.read = function(input)
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.token = input.readString();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.ev = new ttypes.TPingStateEvent();
+        this.ev.read(input);
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
       if (ftype == Thrift.Type.STRING) {
-        this.user = input.readString();
+        this.node_name = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -328,16 +829,16 @@ presenceService_get_presence_info_for_user_args.prototype.read = function(input)
   return;
 };
 
-presenceService_get_presence_info_for_user_args.prototype.write = function(output) {
-  output.writeStructBegin('presenceService_get_presence_info_for_user_args');
-  if (this.token !== null && this.token !== undefined) {
-    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
-    output.writeString(this.token);
+presenceService_publish_pingstate_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_pingstate_args');
+  if (this.ev !== null && this.ev !== undefined) {
+    output.writeFieldBegin('ev', Thrift.Type.STRUCT, 1);
+    this.ev.write(output);
     output.writeFieldEnd();
   }
-  if (this.user !== null && this.user !== undefined) {
-    output.writeFieldBegin('user', Thrift.Type.STRING, 2);
-    output.writeString(this.user);
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 2);
+    output.writeString(this.node_name);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -345,24 +846,20 @@ presenceService_get_presence_info_for_user_args.prototype.write = function(outpu
   return;
 };
 
-presenceService_get_presence_info_for_user_result = function(args) {
-  this.success = null;
+presenceService_publish_pingstate_result = function(args) {
   this.serr = null;
   if (args instanceof sharedService_ttypes.ServerError) {
     this.serr = args;
     return;
   }
   if (args) {
-    if (args.success !== undefined) {
-      this.success = args.success;
-    }
     if (args.serr !== undefined) {
       this.serr = args.serr;
     }
   }
 };
-presenceService_get_presence_info_for_user_result.prototype = {};
-presenceService_get_presence_info_for_user_result.prototype.read = function(input) {
+presenceService_publish_pingstate_result.prototype = {};
+presenceService_publish_pingstate_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -375,13 +872,6 @@ presenceService_get_presence_info_for_user_result.prototype.read = function(inpu
     }
     switch (fid)
     {
-      case 0:
-      if (ftype == Thrift.Type.STRING) {
-        this.success = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
         this.serr = new sharedService_ttypes.ServerError();
@@ -390,6 +880,9 @@ presenceService_get_presence_info_for_user_result.prototype.read = function(inpu
         input.skip(ftype);
       }
       break;
+      case 0:
+        input.skip(ftype);
+        break;
       default:
         input.skip(ftype);
     }
@@ -399,13 +892,8 @@ presenceService_get_presence_info_for_user_result.prototype.read = function(inpu
   return;
 };
 
-presenceService_get_presence_info_for_user_result.prototype.write = function(output) {
-  output.writeStructBegin('presenceService_get_presence_info_for_user_result');
-  if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.STRING, 0);
-    output.writeString(this.success);
-    output.writeFieldEnd();
-  }
+presenceService_publish_pingstate_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_pingstate_result');
   if (this.serr !== null && this.serr !== undefined) {
     output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
     this.serr.write(output);
@@ -416,24 +904,149 @@ presenceService_get_presence_info_for_user_result.prototype.write = function(out
   return;
 };
 
-presenceService_get_presence_info_for_ua_args = function(args) {
-  this.token = null;
-  this.sip_user = null;
-  this.contact = null;
+presenceService_publish_register_args = function(args) {
+  this.ev = null;
+  this.node_name = null;
   if (args) {
-    if (args.token !== undefined) {
-      this.token = args.token;
+    if (args.ev !== undefined) {
+      this.ev = args.ev;
     }
-    if (args.sip_user !== undefined) {
-      this.sip_user = args.sip_user;
-    }
-    if (args.contact !== undefined) {
-      this.contact = args.contact;
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
     }
   }
 };
-presenceService_get_presence_info_for_ua_args.prototype = {};
-presenceService_get_presence_info_for_ua_args.prototype.read = function(input) {
+presenceService_publish_register_args.prototype = {};
+presenceService_publish_register_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.ev = new ttypes.TRegisterEvent();
+        this.ev.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.node_name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_publish_register_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_register_args');
+  if (this.ev !== null && this.ev !== undefined) {
+    output.writeFieldBegin('ev', Thrift.Type.STRUCT, 1);
+    this.ev.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 2);
+    output.writeString(this.node_name);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_publish_register_result = function(args) {
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_publish_register_result.prototype = {};
+presenceService_publish_register_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_publish_register_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_register_result');
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_node_started_args = function(args) {
+  this.node_name = null;
+  this.active_channels = null;
+  this.profile = null;
+  if (args) {
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
+    }
+    if (args.active_channels !== undefined) {
+      this.active_channels = args.active_channels;
+    }
+    if (args.profile !== undefined) {
+      this.profile = args.profile;
+    }
+  }
+};
+presenceService_node_started_args.prototype = {};
+presenceService_node_started_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -448,21 +1061,35 @@ presenceService_get_presence_info_for_ua_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRING) {
-        this.token = input.readString();
+        this.node_name = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.sip_user = input.readString();
+      if (ftype == Thrift.Type.LIST) {
+        var _size32 = 0;
+        var _rtmp336;
+        this.active_channels = [];
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        {
+          var elem38 = null;
+          elem38 = new ttypes.TPresenceEvent();
+          elem38.read(input);
+          this.active_channels.push(elem38);
+        }
+        input.readListEnd();
       } else {
         input.skip(ftype);
       }
       break;
       case 3:
       if (ftype == Thrift.Type.STRING) {
-        this.contact = input.readString();
+        this.profile = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -476,21 +1103,30 @@ presenceService_get_presence_info_for_ua_args.prototype.read = function(input) {
   return;
 };
 
-presenceService_get_presence_info_for_ua_args.prototype.write = function(output) {
-  output.writeStructBegin('presenceService_get_presence_info_for_ua_args');
-  if (this.token !== null && this.token !== undefined) {
-    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
-    output.writeString(this.token);
+presenceService_node_started_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_node_started_args');
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 1);
+    output.writeString(this.node_name);
     output.writeFieldEnd();
   }
-  if (this.sip_user !== null && this.sip_user !== undefined) {
-    output.writeFieldBegin('sip_user', Thrift.Type.STRING, 2);
-    output.writeString(this.sip_user);
+  if (this.active_channels !== null && this.active_channels !== undefined) {
+    output.writeFieldBegin('active_channels', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.active_channels.length);
+    for (var iter39 in this.active_channels)
+    {
+      if (this.active_channels.hasOwnProperty(iter39))
+      {
+        iter39 = this.active_channels[iter39];
+        iter39.write(output);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
-  if (this.contact !== null && this.contact !== undefined) {
-    output.writeFieldBegin('contact', Thrift.Type.STRING, 3);
-    output.writeString(this.contact);
+  if (this.profile !== null && this.profile !== undefined) {
+    output.writeFieldBegin('profile', Thrift.Type.STRING, 3);
+    output.writeString(this.profile);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -498,7 +1134,132 @@ presenceService_get_presence_info_for_ua_args.prototype.write = function(output)
   return;
 };
 
-presenceService_get_presence_info_for_ua_result = function(args) {
+presenceService_node_started_result = function(args) {
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_node_started_result.prototype = {};
+presenceService_node_started_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_node_started_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_node_started_result');
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_write_presence_info_args = function(args) {
+  this.reg = null;
+  this.node_name = null;
+  if (args) {
+    if (args.reg !== undefined) {
+      this.reg = args.reg;
+    }
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
+    }
+  }
+};
+presenceService_write_presence_info_args.prototype = {};
+presenceService_write_presence_info_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.reg = new ttypes.TRegistration();
+        this.reg.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.node_name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_write_presence_info_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_presence_info_args');
+  if (this.reg !== null && this.reg !== undefined) {
+    output.writeFieldBegin('reg', Thrift.Type.STRUCT, 1);
+    this.reg.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 2);
+    output.writeString(this.node_name);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_write_presence_info_result = function(args) {
   this.success = null;
   this.serr = null;
   if (args instanceof sharedService_ttypes.ServerError) {
@@ -514,8 +1275,8 @@ presenceService_get_presence_info_for_ua_result = function(args) {
     }
   }
 };
-presenceService_get_presence_info_for_ua_result.prototype = {};
-presenceService_get_presence_info_for_ua_result.prototype.read = function(input) {
+presenceService_write_presence_info_result.prototype = {};
+presenceService_write_presence_info_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -529,8 +1290,9 @@ presenceService_get_presence_info_for_ua_result.prototype.read = function(input)
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRING) {
-        this.success = input.readString();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.TPresenceInfo();
+        this.success.read(input);
       } else {
         input.skip(ftype);
       }
@@ -552,11 +1314,11 @@ presenceService_get_presence_info_for_ua_result.prototype.read = function(input)
   return;
 };
 
-presenceService_get_presence_info_for_ua_result.prototype.write = function(output) {
-  output.writeStructBegin('presenceService_get_presence_info_for_ua_result');
+presenceService_write_presence_info_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_presence_info_result');
   if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.STRING, 0);
-    output.writeString(this.success);
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
     output.writeFieldEnd();
   }
   if (this.serr !== null && this.serr !== undefined) {
@@ -569,20 +1331,28 @@ presenceService_get_presence_info_for_ua_result.prototype.write = function(outpu
   return;
 };
 
-presenceService_get_presence_info_args = function(args) {
-  this.token = null;
-  this.search_filter = null;
+presenceService_write_callhunting_presence_info_args = function(args) {
+  this.user = null;
+  this.status = null;
+  this.callhunting_uuid = null;
+  this.node_name = null;
   if (args) {
-    if (args.token !== undefined) {
-      this.token = args.token;
+    if (args.user !== undefined) {
+      this.user = args.user;
     }
-    if (args.search_filter !== undefined) {
-      this.search_filter = args.search_filter;
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.callhunting_uuid !== undefined) {
+      this.callhunting_uuid = args.callhunting_uuid;
+    }
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
     }
   }
 };
-presenceService_get_presence_info_args.prototype = {};
-presenceService_get_presence_info_args.prototype.read = function(input) {
+presenceService_write_callhunting_presence_info_args.prototype = {};
+presenceService_write_callhunting_presence_info_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -597,15 +1367,28 @@ presenceService_get_presence_info_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRING) {
-        this.token = input.readString();
+        this.user = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.search_filter = new sharedService_ttypes.ORMFilter();
-        this.search_filter.read(input);
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.callhunting_uuid = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.node_name = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -619,16 +1402,26 @@ presenceService_get_presence_info_args.prototype.read = function(input) {
   return;
 };
 
-presenceService_get_presence_info_args.prototype.write = function(output) {
-  output.writeStructBegin('presenceService_get_presence_info_args');
-  if (this.token !== null && this.token !== undefined) {
-    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
-    output.writeString(this.token);
+presenceService_write_callhunting_presence_info_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_callhunting_presence_info_args');
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 1);
+    output.writeString(this.user);
     output.writeFieldEnd();
   }
-  if (this.search_filter !== null && this.search_filter !== undefined) {
-    output.writeFieldBegin('search_filter', Thrift.Type.STRUCT, 2);
-    this.search_filter.write(output);
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 2);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.callhunting_uuid !== null && this.callhunting_uuid !== undefined) {
+    output.writeFieldBegin('callhunting_uuid', Thrift.Type.STRING, 3);
+    output.writeString(this.callhunting_uuid);
+    output.writeFieldEnd();
+  }
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 4);
+    output.writeString(this.node_name);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -636,7 +1429,7 @@ presenceService_get_presence_info_args.prototype.write = function(output) {
   return;
 };
 
-presenceService_get_presence_info_result = function(args) {
+presenceService_write_callhunting_presence_info_result = function(args) {
   this.success = null;
   this.serr = null;
   if (args instanceof sharedService_ttypes.ServerError) {
@@ -652,8 +1445,8 @@ presenceService_get_presence_info_result = function(args) {
     }
   }
 };
-presenceService_get_presence_info_result.prototype = {};
-presenceService_get_presence_info_result.prototype.read = function(input) {
+presenceService_write_callhunting_presence_info_result.prototype = {};
+presenceService_write_callhunting_presence_info_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -667,39 +1460,9 @@ presenceService_get_presence_info_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.MAP) {
-        var _size0 = 0;
-        var _rtmp34;
-        this.success = {};
-        var _ktype1 = 0;
-        var _vtype2 = 0;
-        _rtmp34 = input.readMapBegin();
-        _ktype1 = _rtmp34.ktype;
-        _vtype2 = _rtmp34.vtype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
-        {
-          var key6 = null;
-          var val7 = null;
-          key6 = input.readI32();
-          var _size8 = 0;
-          var _rtmp312;
-          val7 = [];
-          var _etype11 = 0;
-          _rtmp312 = input.readListBegin();
-          _etype11 = _rtmp312.etype;
-          _size8 = _rtmp312.size;
-          for (var _i13 = 0; _i13 < _size8; ++_i13)
-          {
-            var elem14 = null;
-            elem14 = new presenceService_ttypes.TPresence();
-            elem14.read(input);
-            val7.push(elem14);
-          }
-          input.readListEnd();
-          this.success[key6] = val7;
-        }
-        input.readMapEnd();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.TPresenceInfo();
+        this.success.read(input);
       } else {
         input.skip(ftype);
       }
@@ -721,30 +1484,11 @@ presenceService_get_presence_info_result.prototype.read = function(input) {
   return;
 };
 
-presenceService_get_presence_info_result.prototype.write = function(output) {
-  output.writeStructBegin('presenceService_get_presence_info_result');
+presenceService_write_callhunting_presence_info_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_callhunting_presence_info_result');
   if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.MAP, 0);
-    output.writeMapBegin(Thrift.Type.I32, Thrift.Type.LIST, Thrift.objectLength(this.success));
-    for (var kiter15 in this.success)
-    {
-      if (this.success.hasOwnProperty(kiter15))
-      {
-        var viter16 = this.success[kiter15];
-        output.writeI32(kiter15);
-        output.writeListBegin(Thrift.Type.STRUCT, viter16.length);
-        for (var iter17 in viter16)
-        {
-          if (viter16.hasOwnProperty(iter17))
-          {
-            iter17 = viter16[iter17];
-            iter17.write(output);
-          }
-        }
-        output.writeListEnd();
-      }
-    }
-    output.writeMapEnd();
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
     output.writeFieldEnd();
   }
   if (this.serr !== null && this.serr !== undefined) {
@@ -757,20 +1501,28 @@ presenceService_get_presence_info_result.prototype.write = function(output) {
   return;
 };
 
-presenceService_get_presence_info_for_domain_args = function(args) {
-  this.token = null;
-  this.search_filter = null;
+presenceService_write_user_presence_info_args = function(args) {
+  this.user_id = null;
+  this.status = null;
+  this.recording_counter_increment = null;
+  this.node_name = null;
   if (args) {
-    if (args.token !== undefined) {
-      this.token = args.token;
+    if (args.user_id !== undefined) {
+      this.user_id = args.user_id;
     }
-    if (args.search_filter !== undefined) {
-      this.search_filter = args.search_filter;
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.recording_counter_increment !== undefined) {
+      this.recording_counter_increment = args.recording_counter_increment;
+    }
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
     }
   }
 };
-presenceService_get_presence_info_for_domain_args.prototype = {};
-presenceService_get_presence_info_for_domain_args.prototype.read = function(input) {
+presenceService_write_user_presence_info_args.prototype = {};
+presenceService_write_user_presence_info_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -784,16 +1536,29 @@ presenceService_get_presence_info_for_domain_args.prototype.read = function(inpu
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.token = input.readString();
+      if (ftype == Thrift.Type.I32) {
+        this.user_id = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.search_filter = new sharedService_ttypes.ORMFilter();
-        this.search_filter.read(input);
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I16) {
+        this.recording_counter_increment = input.readI16();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.node_name = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -807,16 +1572,26 @@ presenceService_get_presence_info_for_domain_args.prototype.read = function(inpu
   return;
 };
 
-presenceService_get_presence_info_for_domain_args.prototype.write = function(output) {
-  output.writeStructBegin('presenceService_get_presence_info_for_domain_args');
-  if (this.token !== null && this.token !== undefined) {
-    output.writeFieldBegin('token', Thrift.Type.STRING, 1);
-    output.writeString(this.token);
+presenceService_write_user_presence_info_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_user_presence_info_args');
+  if (this.user_id !== null && this.user_id !== undefined) {
+    output.writeFieldBegin('user_id', Thrift.Type.I32, 1);
+    output.writeI32(this.user_id);
     output.writeFieldEnd();
   }
-  if (this.search_filter !== null && this.search_filter !== undefined) {
-    output.writeFieldBegin('search_filter', Thrift.Type.STRUCT, 2);
-    this.search_filter.write(output);
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 2);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.recording_counter_increment !== null && this.recording_counter_increment !== undefined) {
+    output.writeFieldBegin('recording_counter_increment', Thrift.Type.I16, 3);
+    output.writeI16(this.recording_counter_increment);
+    output.writeFieldEnd();
+  }
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 4);
+    output.writeString(this.node_name);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -824,7 +1599,7 @@ presenceService_get_presence_info_for_domain_args.prototype.write = function(out
   return;
 };
 
-presenceService_get_presence_info_for_domain_result = function(args) {
+presenceService_write_user_presence_info_result = function(args) {
   this.success = null;
   this.serr = null;
   if (args instanceof sharedService_ttypes.ServerError) {
@@ -840,8 +1615,8 @@ presenceService_get_presence_info_for_domain_result = function(args) {
     }
   }
 };
-presenceService_get_presence_info_for_domain_result.prototype = {};
-presenceService_get_presence_info_for_domain_result.prototype.read = function(input) {
+presenceService_write_user_presence_info_result.prototype = {};
+presenceService_write_user_presence_info_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -855,39 +1630,9 @@ presenceService_get_presence_info_for_domain_result.prototype.read = function(in
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.MAP) {
-        var _size18 = 0;
-        var _rtmp322;
-        this.success = {};
-        var _ktype19 = 0;
-        var _vtype20 = 0;
-        _rtmp322 = input.readMapBegin();
-        _ktype19 = _rtmp322.ktype;
-        _vtype20 = _rtmp322.vtype;
-        _size18 = _rtmp322.size;
-        for (var _i23 = 0; _i23 < _size18; ++_i23)
-        {
-          var key24 = null;
-          var val25 = null;
-          key24 = input.readI32();
-          var _size26 = 0;
-          var _rtmp330;
-          val25 = [];
-          var _etype29 = 0;
-          _rtmp330 = input.readListBegin();
-          _etype29 = _rtmp330.etype;
-          _size26 = _rtmp330.size;
-          for (var _i31 = 0; _i31 < _size26; ++_i31)
-          {
-            var elem32 = null;
-            elem32 = new presenceService_ttypes.TPresence();
-            elem32.read(input);
-            val25.push(elem32);
-          }
-          input.readListEnd();
-          this.success[key24] = val25;
-        }
-        input.readMapEnd();
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.TPresenceInfo();
+        this.success.read(input);
       } else {
         input.skip(ftype);
       }
@@ -909,30 +1654,428 @@ presenceService_get_presence_info_for_domain_result.prototype.read = function(in
   return;
 };
 
-presenceService_get_presence_info_for_domain_result.prototype.write = function(output) {
-  output.writeStructBegin('presenceService_get_presence_info_for_domain_result');
+presenceService_write_user_presence_info_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_user_presence_info_result');
   if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.MAP, 0);
-    output.writeMapBegin(Thrift.Type.I32, Thrift.Type.LIST, Thrift.objectLength(this.success));
-    for (var kiter33 in this.success)
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_write_xmpp_presence_info_args = function(args) {
+  this.user = null;
+  this.domain = null;
+  this.resource = null;
+  this.status = null;
+  this.status_message = null;
+  this.priority = null;
+  this.photo = null;
+  if (args) {
+    if (args.user !== undefined) {
+      this.user = args.user;
+    }
+    if (args.domain !== undefined) {
+      this.domain = args.domain;
+    }
+    if (args.resource !== undefined) {
+      this.resource = args.resource;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.status_message !== undefined) {
+      this.status_message = args.status_message;
+    }
+    if (args.priority !== undefined) {
+      this.priority = args.priority;
+    }
+    if (args.photo !== undefined) {
+      this.photo = args.photo;
+    }
+  }
+};
+presenceService_write_xmpp_presence_info_args.prototype = {};
+presenceService_write_xmpp_presence_info_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
     {
-      if (this.success.hasOwnProperty(kiter33))
-      {
-        var viter34 = this.success[kiter33];
-        output.writeI32(kiter33);
-        output.writeListBegin(Thrift.Type.STRUCT, viter34.length);
-        for (var iter35 in viter34)
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.domain = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.resource = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.STRING) {
+        this.status_message = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I16) {
+        this.priority = input.readI16();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.photo = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_write_xmpp_presence_info_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_xmpp_presence_info_args');
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 1);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  if (this.domain !== null && this.domain !== undefined) {
+    output.writeFieldBegin('domain', Thrift.Type.STRING, 2);
+    output.writeString(this.domain);
+    output.writeFieldEnd();
+  }
+  if (this.resource !== null && this.resource !== undefined) {
+    output.writeFieldBegin('resource', Thrift.Type.STRING, 3);
+    output.writeString(this.resource);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 4);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.status_message !== null && this.status_message !== undefined) {
+    output.writeFieldBegin('status_message', Thrift.Type.STRING, 5);
+    output.writeString(this.status_message);
+    output.writeFieldEnd();
+  }
+  if (this.priority !== null && this.priority !== undefined) {
+    output.writeFieldBegin('priority', Thrift.Type.I16, 6);
+    output.writeI16(this.priority);
+    output.writeFieldEnd();
+  }
+  if (this.photo !== null && this.photo !== undefined) {
+    output.writeFieldBegin('photo', Thrift.Type.STRING, 7);
+    output.writeString(this.photo);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_write_xmpp_presence_info_result = function(args) {
+  this.success = null;
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_write_xmpp_presence_info_result.prototype = {};
+presenceService_write_xmpp_presence_info_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.TPresenceInfo();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_write_xmpp_presence_info_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_xmpp_presence_info_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_write_initial_presence_args = function(args) {
+  this.regs = null;
+  this.node_name = null;
+  this.delete_current = null;
+  if (args) {
+    if (args.regs !== undefined) {
+      this.regs = args.regs;
+    }
+    if (args.node_name !== undefined) {
+      this.node_name = args.node_name;
+    }
+    if (args.delete_current !== undefined) {
+      this.delete_current = args.delete_current;
+    }
+  }
+};
+presenceService_write_initial_presence_args.prototype = {};
+presenceService_write_initial_presence_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size40 = 0;
+        var _rtmp344;
+        this.regs = [];
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
         {
-          if (viter34.hasOwnProperty(iter35))
-          {
-            iter35 = viter34[iter35];
-            iter35.write(output);
-          }
+          var elem46 = null;
+          elem46 = new ttypes.TRegistration();
+          elem46.read(input);
+          this.regs.push(elem46);
         }
-        output.writeListEnd();
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.node_name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.BOOL) {
+        this.delete_current = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_write_initial_presence_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_initial_presence_args');
+  if (this.regs !== null && this.regs !== undefined) {
+    output.writeFieldBegin('regs', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.regs.length);
+    for (var iter47 in this.regs)
+    {
+      if (this.regs.hasOwnProperty(iter47))
+      {
+        iter47 = this.regs[iter47];
+        iter47.write(output);
       }
     }
-    output.writeMapEnd();
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.node_name !== null && this.node_name !== undefined) {
+    output.writeFieldBegin('node_name', Thrift.Type.STRING, 2);
+    output.writeString(this.node_name);
+    output.writeFieldEnd();
+  }
+  if (this.delete_current !== null && this.delete_current !== undefined) {
+    output.writeFieldBegin('delete_current', Thrift.Type.BOOL, 3);
+    output.writeBool(this.delete_current);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_write_initial_presence_result = function(args) {
+  this.success = null;
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_write_initial_presence_result.prototype = {};
+presenceService_write_initial_presence_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.LIST) {
+        var _size48 = 0;
+        var _rtmp352;
+        this.success = [];
+        var _etype51 = 0;
+        _rtmp352 = input.readListBegin();
+        _etype51 = _rtmp352.etype;
+        _size48 = _rtmp352.size;
+        for (var _i53 = 0; _i53 < _size48; ++_i53)
+        {
+          var elem54 = null;
+          elem54 = new ttypes.TPresenceInfo();
+          elem54.read(input);
+          this.success.push(elem54);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_write_initial_presence_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_initial_presence_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.LIST, 0);
+    output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
+    for (var iter55 in this.success)
+    {
+      if (this.success.hasOwnProperty(iter55))
+      {
+        iter55 = this.success[iter55];
+        iter55.write(output);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   if (this.serr !== null && this.serr !== undefined) {
@@ -952,17 +2095,16 @@ presenceServiceClient = exports.Client = function(output, pClass) {
     this._reqs = {};
 };
 Thrift.inherits(presenceServiceClient, baseServiceClient)
-presenceServiceClient.prototype.request_initial_status = function(token, domain, request_uuid, callback) {
+presenceServiceClient.prototype.request_initial_status = function(domain, request_uuid, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_request_initial_status(token, domain, request_uuid);
+  this.send_request_initial_status(domain, request_uuid);
 };
 
-presenceServiceClient.prototype.send_request_initial_status = function(token, domain, request_uuid) {
+presenceServiceClient.prototype.send_request_initial_status = function(domain, request_uuid) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('request_initial_status', Thrift.MessageType.CALL, this.seqid);
   var args = new presenceService_request_initial_status_args();
-  args.token = token;
   args.domain = domain;
   args.request_uuid = request_uuid;
   args.write(output);
@@ -988,17 +2130,158 @@ presenceServiceClient.prototype.recv_request_initial_status = function(input,mty
   }
   callback(null)
 };
-presenceServiceClient.prototype.publish_xmpp_presence = function(token, ev, callback) {
+presenceServiceClient.prototype.probe_status = function(user, domain, request_uuid, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_publish_xmpp_presence(token, ev);
+  this.send_probe_status(user, domain, request_uuid);
 };
 
-presenceServiceClient.prototype.send_publish_xmpp_presence = function(token, ev) {
+presenceServiceClient.prototype.send_probe_status = function(user, domain, request_uuid) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('probe_status', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_probe_status_args();
+  args.user = user;
+  args.domain = domain;
+  args.request_uuid = request_uuid;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_probe_status = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_probe_status_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  callback(null)
+};
+presenceServiceClient.prototype.probe_user_status = function(user, domain, request_uuid, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_probe_user_status(user, domain, request_uuid);
+};
+
+presenceServiceClient.prototype.send_probe_user_status = function(user, domain, request_uuid) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('probe_user_status', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_probe_user_status_args();
+  args.user = user;
+  args.domain = domain;
+  args.request_uuid = request_uuid;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_probe_user_status = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_probe_user_status_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  callback(null)
+};
+presenceServiceClient.prototype.publish_presence = function(ev, node_name, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_publish_presence(ev, node_name);
+};
+
+presenceServiceClient.prototype.send_publish_presence = function(ev, node_name) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('publish_presence', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_publish_presence_args();
+  args.ev = ev;
+  args.node_name = node_name;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_publish_presence = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_publish_presence_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  callback(null)
+};
+presenceServiceClient.prototype.publish_channel = function(ev, node_name, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_publish_channel(ev, node_name);
+};
+
+presenceServiceClient.prototype.send_publish_channel = function(ev, node_name) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('publish_channel', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_publish_channel_args();
+  args.ev = ev;
+  args.node_name = node_name;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_publish_channel = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_publish_channel_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  callback(null)
+};
+presenceServiceClient.prototype.publish_xmpp_presence = function(ev, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_publish_xmpp_presence(ev);
+};
+
+presenceServiceClient.prototype.send_publish_xmpp_presence = function(ev) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('publish_xmpp_presence', Thrift.MessageType.CALL, this.seqid);
   var args = new presenceService_publish_xmpp_presence_args();
-  args.token = token;
   args.ev = ev;
   args.write(output);
   output.writeMessageEnd();
@@ -1023,24 +2306,170 @@ presenceServiceClient.prototype.recv_publish_xmpp_presence = function(input,mtyp
   }
   callback(null)
 };
-presenceServiceClient.prototype.get_presence_info_for_user = function(token, user, callback) {
+presenceServiceClient.prototype.publish_pingstate = function(ev, node_name, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_get_presence_info_for_user(token, user);
+  this.send_publish_pingstate(ev, node_name);
 };
 
-presenceServiceClient.prototype.send_get_presence_info_for_user = function(token, user) {
+presenceServiceClient.prototype.send_publish_pingstate = function(ev, node_name) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('get_presence_info_for_user', Thrift.MessageType.CALL, this.seqid);
-  var args = new presenceService_get_presence_info_for_user_args();
-  args.token = token;
+  output.writeMessageBegin('publish_pingstate', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_publish_pingstate_args();
+  args.ev = ev;
+  args.node_name = node_name;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_publish_pingstate = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_publish_pingstate_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  callback(null)
+};
+presenceServiceClient.prototype.publish_register = function(ev, node_name, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_publish_register(ev, node_name);
+};
+
+presenceServiceClient.prototype.send_publish_register = function(ev, node_name) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('publish_register', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_publish_register_args();
+  args.ev = ev;
+  args.node_name = node_name;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_publish_register = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_publish_register_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  callback(null)
+};
+presenceServiceClient.prototype.node_started = function(node_name, active_channels, profile, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_node_started(node_name, active_channels, profile);
+};
+
+presenceServiceClient.prototype.send_node_started = function(node_name, active_channels, profile) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('node_started', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_node_started_args();
+  args.node_name = node_name;
+  args.active_channels = active_channels;
+  args.profile = profile;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_node_started = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_node_started_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  callback(null)
+};
+presenceServiceClient.prototype.write_presence_info = function(reg, node_name, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_write_presence_info(reg, node_name);
+};
+
+presenceServiceClient.prototype.send_write_presence_info = function(reg, node_name) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('write_presence_info', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_write_presence_info_args();
+  args.reg = reg;
+  args.node_name = node_name;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_write_presence_info = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_write_presence_info_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('write_presence_info failed: unknown result');
+};
+presenceServiceClient.prototype.write_callhunting_presence_info = function(user, status, callhunting_uuid, node_name, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_write_callhunting_presence_info(user, status, callhunting_uuid, node_name);
+};
+
+presenceServiceClient.prototype.send_write_callhunting_presence_info = function(user, status, callhunting_uuid, node_name) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('write_callhunting_presence_info', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_write_callhunting_presence_info_args();
   args.user = user;
+  args.status = status;
+  args.callhunting_uuid = callhunting_uuid;
+  args.node_name = node_name;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-presenceServiceClient.prototype.recv_get_presence_info_for_user = function(input,mtype,rseqid) {
+presenceServiceClient.prototype.recv_write_callhunting_presence_info = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -1049,7 +2478,7 @@ presenceServiceClient.prototype.recv_get_presence_info_for_user = function(input
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new presenceService_get_presence_info_for_user_result();
+  var result = new presenceService_write_callhunting_presence_info_result();
   result.read(input);
   input.readMessageEnd();
 
@@ -1059,27 +2488,28 @@ presenceServiceClient.prototype.recv_get_presence_info_for_user = function(input
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('get_presence_info_for_user failed: unknown result');
+  return callback('write_callhunting_presence_info failed: unknown result');
 };
-presenceServiceClient.prototype.get_presence_info_for_ua = function(token, sip_user, contact, callback) {
+presenceServiceClient.prototype.write_user_presence_info = function(user_id, status, recording_counter_increment, node_name, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_get_presence_info_for_ua(token, sip_user, contact);
+  this.send_write_user_presence_info(user_id, status, recording_counter_increment, node_name);
 };
 
-presenceServiceClient.prototype.send_get_presence_info_for_ua = function(token, sip_user, contact) {
+presenceServiceClient.prototype.send_write_user_presence_info = function(user_id, status, recording_counter_increment, node_name) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('get_presence_info_for_ua', Thrift.MessageType.CALL, this.seqid);
-  var args = new presenceService_get_presence_info_for_ua_args();
-  args.token = token;
-  args.sip_user = sip_user;
-  args.contact = contact;
+  output.writeMessageBegin('write_user_presence_info', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_write_user_presence_info_args();
+  args.user_id = user_id;
+  args.status = status;
+  args.recording_counter_increment = recording_counter_increment;
+  args.node_name = node_name;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-presenceServiceClient.prototype.recv_get_presence_info_for_ua = function(input,mtype,rseqid) {
+presenceServiceClient.prototype.recv_write_user_presence_info = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -1088,7 +2518,7 @@ presenceServiceClient.prototype.recv_get_presence_info_for_ua = function(input,m
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new presenceService_get_presence_info_for_ua_result();
+  var result = new presenceService_write_user_presence_info_result();
   result.read(input);
   input.readMessageEnd();
 
@@ -1098,26 +2528,31 @@ presenceServiceClient.prototype.recv_get_presence_info_for_ua = function(input,m
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('get_presence_info_for_ua failed: unknown result');
+  return callback('write_user_presence_info failed: unknown result');
 };
-presenceServiceClient.prototype.get_presence_info = function(token, search_filter, callback) {
+presenceServiceClient.prototype.write_xmpp_presence_info = function(user, domain, resource, status, status_message, priority, photo, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_get_presence_info(token, search_filter);
+  this.send_write_xmpp_presence_info(user, domain, resource, status, status_message, priority, photo);
 };
 
-presenceServiceClient.prototype.send_get_presence_info = function(token, search_filter) {
+presenceServiceClient.prototype.send_write_xmpp_presence_info = function(user, domain, resource, status, status_message, priority, photo) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('get_presence_info', Thrift.MessageType.CALL, this.seqid);
-  var args = new presenceService_get_presence_info_args();
-  args.token = token;
-  args.search_filter = search_filter;
+  output.writeMessageBegin('write_xmpp_presence_info', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_write_xmpp_presence_info_args();
+  args.user = user;
+  args.domain = domain;
+  args.resource = resource;
+  args.status = status;
+  args.status_message = status_message;
+  args.priority = priority;
+  args.photo = photo;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-presenceServiceClient.prototype.recv_get_presence_info = function(input,mtype,rseqid) {
+presenceServiceClient.prototype.recv_write_xmpp_presence_info = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -1126,7 +2561,7 @@ presenceServiceClient.prototype.recv_get_presence_info = function(input,mtype,rs
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new presenceService_get_presence_info_result();
+  var result = new presenceService_write_xmpp_presence_info_result();
   result.read(input);
   input.readMessageEnd();
 
@@ -1136,26 +2571,27 @@ presenceServiceClient.prototype.recv_get_presence_info = function(input,mtype,rs
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('get_presence_info failed: unknown result');
+  return callback('write_xmpp_presence_info failed: unknown result');
 };
-presenceServiceClient.prototype.get_presence_info_for_domain = function(token, search_filter, callback) {
+presenceServiceClient.prototype.write_initial_presence = function(regs, node_name, delete_current, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_get_presence_info_for_domain(token, search_filter);
+  this.send_write_initial_presence(regs, node_name, delete_current);
 };
 
-presenceServiceClient.prototype.send_get_presence_info_for_domain = function(token, search_filter) {
+presenceServiceClient.prototype.send_write_initial_presence = function(regs, node_name, delete_current) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('get_presence_info_for_domain', Thrift.MessageType.CALL, this.seqid);
-  var args = new presenceService_get_presence_info_for_domain_args();
-  args.token = token;
-  args.search_filter = search_filter;
+  output.writeMessageBegin('write_initial_presence', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_write_initial_presence_args();
+  args.regs = regs;
+  args.node_name = node_name;
+  args.delete_current = delete_current;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-presenceServiceClient.prototype.recv_get_presence_info_for_domain = function(input,mtype,rseqid) {
+presenceServiceClient.prototype.recv_write_initial_presence = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -1164,7 +2600,7 @@ presenceServiceClient.prototype.recv_get_presence_info_for_domain = function(inp
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new presenceService_get_presence_info_for_domain_result();
+  var result = new presenceService_write_initial_presence_result();
   result.read(input);
   input.readMessageEnd();
 
@@ -1174,7 +2610,7 @@ presenceServiceClient.prototype.recv_get_presence_info_for_domain = function(inp
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('get_presence_info_for_domain failed: unknown result');
+  return callback('write_initial_presence failed: unknown result');
 };
 presenceServiceProcessor = exports.Processor = function(handler) {
   this._handler = handler
@@ -1199,9 +2635,61 @@ presenceServiceProcessor.prototype.process_request_initial_status = function(seq
   var args = new presenceService_request_initial_status_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.request_initial_status(args.token, args.domain, args.request_uuid, function (err, result) {
+  this._handler.request_initial_status(args.domain, args.request_uuid, function (err, result) {
     var result = new presenceService_request_initial_status_result((err != null ? err : {success: result}));
     output.writeMessageBegin("request_initial_status", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_probe_status = function(seqid, input, output) {
+  var args = new presenceService_probe_status_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.probe_status(args.user, args.domain, args.request_uuid, function (err, result) {
+    var result = new presenceService_probe_status_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("probe_status", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_probe_user_status = function(seqid, input, output) {
+  var args = new presenceService_probe_user_status_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.probe_user_status(args.user, args.domain, args.request_uuid, function (err, result) {
+    var result = new presenceService_probe_user_status_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("probe_user_status", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_publish_presence = function(seqid, input, output) {
+  var args = new presenceService_publish_presence_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.publish_presence(args.ev, args.node_name, function (err, result) {
+    var result = new presenceService_publish_presence_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("publish_presence", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_publish_channel = function(seqid, input, output) {
+  var args = new presenceService_publish_channel_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.publish_channel(args.ev, args.node_name, function (err, result) {
+    var result = new presenceService_publish_channel_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("publish_channel", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
@@ -1212,7 +2700,7 @@ presenceServiceProcessor.prototype.process_publish_xmpp_presence = function(seqi
   var args = new presenceService_publish_xmpp_presence_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.publish_xmpp_presence(args.token, args.ev, function (err, result) {
+  this._handler.publish_xmpp_presence(args.ev, function (err, result) {
     var result = new presenceService_publish_xmpp_presence_result((err != null ? err : {success: result}));
     output.writeMessageBegin("publish_xmpp_presence", Thrift.MessageType.REPLY, seqid);
     result.write(output);
@@ -1221,52 +2709,104 @@ presenceServiceProcessor.prototype.process_publish_xmpp_presence = function(seqi
   })
 }
 
-presenceServiceProcessor.prototype.process_get_presence_info_for_user = function(seqid, input, output) {
-  var args = new presenceService_get_presence_info_for_user_args();
+presenceServiceProcessor.prototype.process_publish_pingstate = function(seqid, input, output) {
+  var args = new presenceService_publish_pingstate_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.get_presence_info_for_user(args.token, args.user, function (err, result) {
-    var result = new presenceService_get_presence_info_for_user_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("get_presence_info_for_user", Thrift.MessageType.REPLY, seqid);
+  this._handler.publish_pingstate(args.ev, args.node_name, function (err, result) {
+    var result = new presenceService_publish_pingstate_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("publish_pingstate", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
   })
 }
 
-presenceServiceProcessor.prototype.process_get_presence_info_for_ua = function(seqid, input, output) {
-  var args = new presenceService_get_presence_info_for_ua_args();
+presenceServiceProcessor.prototype.process_publish_register = function(seqid, input, output) {
+  var args = new presenceService_publish_register_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.get_presence_info_for_ua(args.token, args.sip_user, args.contact, function (err, result) {
-    var result = new presenceService_get_presence_info_for_ua_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("get_presence_info_for_ua", Thrift.MessageType.REPLY, seqid);
+  this._handler.publish_register(args.ev, args.node_name, function (err, result) {
+    var result = new presenceService_publish_register_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("publish_register", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
   })
 }
 
-presenceServiceProcessor.prototype.process_get_presence_info = function(seqid, input, output) {
-  var args = new presenceService_get_presence_info_args();
+presenceServiceProcessor.prototype.process_node_started = function(seqid, input, output) {
+  var args = new presenceService_node_started_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.get_presence_info(args.token, args.search_filter, function (err, result) {
-    var result = new presenceService_get_presence_info_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("get_presence_info", Thrift.MessageType.REPLY, seqid);
+  this._handler.node_started(args.node_name, args.active_channels, args.profile, function (err, result) {
+    var result = new presenceService_node_started_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("node_started", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
   })
 }
 
-presenceServiceProcessor.prototype.process_get_presence_info_for_domain = function(seqid, input, output) {
-  var args = new presenceService_get_presence_info_for_domain_args();
+presenceServiceProcessor.prototype.process_write_presence_info = function(seqid, input, output) {
+  var args = new presenceService_write_presence_info_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.get_presence_info_for_domain(args.token, args.search_filter, function (err, result) {
-    var result = new presenceService_get_presence_info_for_domain_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("get_presence_info_for_domain", Thrift.MessageType.REPLY, seqid);
+  this._handler.write_presence_info(args.reg, args.node_name, function (err, result) {
+    var result = new presenceService_write_presence_info_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("write_presence_info", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_write_callhunting_presence_info = function(seqid, input, output) {
+  var args = new presenceService_write_callhunting_presence_info_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.write_callhunting_presence_info(args.user, args.status, args.callhunting_uuid, args.node_name, function (err, result) {
+    var result = new presenceService_write_callhunting_presence_info_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("write_callhunting_presence_info", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_write_user_presence_info = function(seqid, input, output) {
+  var args = new presenceService_write_user_presence_info_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.write_user_presence_info(args.user_id, args.status, args.recording_counter_increment, args.node_name, function (err, result) {
+    var result = new presenceService_write_user_presence_info_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("write_user_presence_info", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_write_xmpp_presence_info = function(seqid, input, output) {
+  var args = new presenceService_write_xmpp_presence_info_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.write_xmpp_presence_info(args.user, args.domain, args.resource, args.status, args.status_message, args.priority, args.photo, function (err, result) {
+    var result = new presenceService_write_xmpp_presence_info_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("write_xmpp_presence_info", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_write_initial_presence = function(seqid, input, output) {
+  var args = new presenceService_write_initial_presence_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.write_initial_presence(args.regs, args.node_name, args.delete_current, function (err, result) {
+    var result = new presenceService_write_initial_presence_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("write_initial_presence", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
