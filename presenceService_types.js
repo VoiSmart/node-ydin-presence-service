@@ -1316,6 +1316,136 @@ TXmppEvent.prototype.write = function(output) {
   return;
 };
 
+TWebchatEvent = module.exports.TWebchatEvent = function(args) {
+  this.name = 'PRESENCE';
+  this.user = null;
+  this.domain = null;
+  this.resource = null;
+  this.status = null;
+  this.presence_source = 'webchat';
+  if (args) {
+    if (args.name !== undefined) {
+      this.name = args.name;
+    }
+    if (args.user !== undefined) {
+      this.user = args.user;
+    }
+    if (args.domain !== undefined) {
+      this.domain = args.domain;
+    }
+    if (args.resource !== undefined) {
+      this.resource = args.resource;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.presence_source !== undefined) {
+      this.presence_source = args.presence_source;
+    }
+  }
+};
+TWebchatEvent.prototype = {};
+TWebchatEvent.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.domain = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.resource = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.presence_source = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TWebchatEvent.prototype.write = function(output) {
+  output.writeStructBegin('TWebchatEvent');
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 1);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 2);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  if (this.domain !== null && this.domain !== undefined) {
+    output.writeFieldBegin('domain', Thrift.Type.STRING, 3);
+    output.writeString(this.domain);
+    output.writeFieldEnd();
+  }
+  if (this.resource !== null && this.resource !== undefined) {
+    output.writeFieldBegin('resource', Thrift.Type.STRING, 4);
+    output.writeString(this.resource);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 6);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.presence_source !== null && this.presence_source !== undefined) {
+    output.writeFieldBegin('presence_source', Thrift.Type.STRING, 7);
+    output.writeString(this.presence_source);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 TPresence = module.exports.TPresence = function(args) {
   this.user_id = null;
   this.username = null;

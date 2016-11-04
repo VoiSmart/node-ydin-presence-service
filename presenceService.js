@@ -779,6 +779,118 @@ presenceService_publish_xmpp_presence_result.prototype.write = function(output) 
   return;
 };
 
+presenceService_publish_webchat_presence_args = function(args) {
+  this.ev = null;
+  if (args) {
+    if (args.ev !== undefined) {
+      this.ev = args.ev;
+    }
+  }
+};
+presenceService_publish_webchat_presence_args.prototype = {};
+presenceService_publish_webchat_presence_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.ev = new ttypes.TXmppEvent();
+        this.ev.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_publish_webchat_presence_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_webchat_presence_args');
+  if (this.ev !== null && this.ev !== undefined) {
+    output.writeFieldBegin('ev', Thrift.Type.STRUCT, 1);
+    this.ev.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_publish_webchat_presence_result = function(args) {
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_publish_webchat_presence_result.prototype = {};
+presenceService_publish_webchat_presence_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_publish_webchat_presence_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_publish_webchat_presence_result');
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 presenceService_publish_pingstate_args = function(args) {
   this.ev = null;
   this.node_name = null;
@@ -1889,6 +2001,176 @@ presenceService_write_xmpp_presence_info_result.prototype.write = function(outpu
   return;
 };
 
+presenceService_write_webchat_presence_info_args = function(args) {
+  this.user = null;
+  this.domain = null;
+  this.resource = null;
+  this.status = null;
+  if (args) {
+    if (args.user !== undefined) {
+      this.user = args.user;
+    }
+    if (args.domain !== undefined) {
+      this.domain = args.domain;
+    }
+    if (args.resource !== undefined) {
+      this.resource = args.resource;
+    }
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+  }
+};
+presenceService_write_webchat_presence_info_args.prototype = {};
+presenceService_write_webchat_presence_info_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.domain = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.resource = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_write_webchat_presence_info_args.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_webchat_presence_info_args');
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 1);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  if (this.domain !== null && this.domain !== undefined) {
+    output.writeFieldBegin('domain', Thrift.Type.STRING, 2);
+    output.writeString(this.domain);
+    output.writeFieldEnd();
+  }
+  if (this.resource !== null && this.resource !== undefined) {
+    output.writeFieldBegin('resource', Thrift.Type.STRING, 3);
+    output.writeString(this.resource);
+    output.writeFieldEnd();
+  }
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 4);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+presenceService_write_webchat_presence_info_result = function(args) {
+  this.success = null;
+  this.serr = null;
+  if (args instanceof sharedService_ttypes.ServerError) {
+    this.serr = args;
+    return;
+  }
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+    if (args.serr !== undefined) {
+      this.serr = args.serr;
+    }
+  }
+};
+presenceService_write_webchat_presence_info_result.prototype = {};
+presenceService_write_webchat_presence_info_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.success = new ttypes.TPresenceInfo();
+        this.success.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.serr = new sharedService_ttypes.ServerError();
+        this.serr.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+presenceService_write_webchat_presence_info_result.prototype.write = function(output) {
+  output.writeStructBegin('presenceService_write_webchat_presence_info_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.serr !== null && this.serr !== undefined) {
+    output.writeFieldBegin('serr', Thrift.Type.STRUCT, 1);
+    this.serr.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 presenceService_write_initial_presence_args = function(args) {
   this.regs = null;
   this.node_name = null;
@@ -2306,6 +2588,40 @@ presenceServiceClient.prototype.recv_publish_xmpp_presence = function(input,mtyp
   }
   callback(null)
 };
+presenceServiceClient.prototype.publish_webchat_presence = function(ev, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_publish_webchat_presence(ev);
+};
+
+presenceServiceClient.prototype.send_publish_webchat_presence = function(ev) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('publish_webchat_presence', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_publish_webchat_presence_args();
+  args.ev = ev;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_publish_webchat_presence = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_publish_webchat_presence_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  callback(null)
+};
 presenceServiceClient.prototype.publish_pingstate = function(ev, node_name, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
@@ -2573,6 +2889,46 @@ presenceServiceClient.prototype.recv_write_xmpp_presence_info = function(input,m
   }
   return callback('write_xmpp_presence_info failed: unknown result');
 };
+presenceServiceClient.prototype.write_webchat_presence_info = function(user, domain, resource, status, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_write_webchat_presence_info(user, domain, resource, status);
+};
+
+presenceServiceClient.prototype.send_write_webchat_presence_info = function(user, domain, resource, status) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('write_webchat_presence_info', Thrift.MessageType.CALL, this.seqid);
+  var args = new presenceService_write_webchat_presence_info_args();
+  args.user = user;
+  args.domain = domain;
+  args.resource = resource;
+  args.status = status;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+presenceServiceClient.prototype.recv_write_webchat_presence_info = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new presenceService_write_webchat_presence_info_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.serr) {
+    return callback(result.serr);
+  }
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('write_webchat_presence_info failed: unknown result');
+};
 presenceServiceClient.prototype.write_initial_presence = function(regs, node_name, delete_current, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
@@ -2709,6 +3065,19 @@ presenceServiceProcessor.prototype.process_publish_xmpp_presence = function(seqi
   })
 }
 
+presenceServiceProcessor.prototype.process_publish_webchat_presence = function(seqid, input, output) {
+  var args = new presenceService_publish_webchat_presence_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.publish_webchat_presence(args.ev, function (err, result) {
+    var result = new presenceService_publish_webchat_presence_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("publish_webchat_presence", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
 presenceServiceProcessor.prototype.process_publish_pingstate = function(seqid, input, output) {
   var args = new presenceService_publish_pingstate_args();
   args.read(input);
@@ -2794,6 +3163,19 @@ presenceServiceProcessor.prototype.process_write_xmpp_presence_info = function(s
   this._handler.write_xmpp_presence_info(args.user, args.domain, args.resource, args.status, args.status_message, args.priority, args.photo, function (err, result) {
     var result = new presenceService_write_xmpp_presence_info_result((err != null ? err : {success: result}));
     output.writeMessageBegin("write_xmpp_presence_info", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+presenceServiceProcessor.prototype.process_write_webchat_presence_info = function(seqid, input, output) {
+  var args = new presenceService_write_webchat_presence_info_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.write_webchat_presence_info(args.user, args.domain, args.resource, args.status, function (err, result) {
+    var result = new presenceService_write_webchat_presence_info_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("write_webchat_presence_info", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
